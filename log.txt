@@ -1,0 +1,259 @@
+λ techxtrasol nextgen → λ git main → php artisan migrate
+
+   INFO  Running migrations.
+
+  2024_01_15_000001_add_fields_to_users_table ............................... 1s DONE
+  2024_01_15_000002_create_member_contributions_table ................. 356.19ms DONE
+  2024_01_15_000003_create_loans_table ................................ 134.74ms DONE
+  2024_01_15_000004_create_loan_payments_table ........................ 280.03ms DONE
+  2024_01_15_000005_create_cic_investments_table ...................... 294.75ms DONE
+  2024_01_15_000006_create_interest_distributions_table ............... 141.07ms DONE
+  2024_01_15_000007_create_milestones_table ........................... 142.22ms DONE
+
+λ techxtrasol nextgen → λ git main → composer require filament/filament:"^3.3" -W
+
+php artisan filament:install --panels
+./composer.json has been updated
+Running composer update filament/filament --with-all-dependencies
+Loading composer repositories with package information
+Updating dependencies
+Lock file operations: 26 installs, 0 updates, 0 removals
+  - Locking anourvalar/eloquent-serialize (1.3.3)
+  - Locking blade-ui-kit/blade-heroicons (2.6.0)
+  - Locking blade-ui-kit/blade-icons (1.8.0)
+  - Locking danharrin/date-format-converter (v0.3.1)
+  - Locking danharrin/livewire-rate-limiting (v2.1.0)
+  - Locking doctrine/dbal (4.3.0)
+  - Locking doctrine/deprecations (1.1.5)
+  - Locking filament/actions (v3.3.32)
+  - Locking filament/filament (v3.3.32)
+  - Locking filament/forms (v3.3.32)
+  - Locking filament/infolists (v3.3.32)
+  - Locking filament/notifications (v3.3.32)
+  - Locking filament/support (v3.3.32)
+  - Locking filament/tables (v3.3.32)
+  - Locking filament/widgets (v3.3.32)
+  - Locking kirschbaum-development/eloquent-power-joins (4.2.6)
+  - Locking league/csv (9.24.1)
+  - Locking livewire/livewire (v3.6.4)
+  - Locking masterminds/html5 (2.9.0)
+  - Locking openspout/openspout (v4.30.1)
+  - Locking psr/cache (3.0.0)
+  - Locking ryangjchandler/blade-capture-directive (v1.1.0)
+  - Locking spatie/color (1.8.0)
+  - Locking spatie/invade (2.1.0)
+  - Locking spatie/laravel-package-tools (1.92.7)
+  - Locking symfony/html-sanitizer (v7.3.0)
+Writing lock file
+Installing dependencies from lock file (including require-dev)
+Package operations: 26 installs, 0 updates, 0 removals
+  - Downloading doctrine/dbal (4.3.0)
+  - Downloading spatie/laravel-package-tools (1.92.7)
+  - Downloading livewire/livewire (v3.6.4)
+  - Downloading kirschbaum-development/eloquent-power-joins (4.2.6)
+  - Downloading filament/support (v3.3.32)
+  - Downloading filament/widgets (v3.3.32)
+  - Downloading openspout/openspout (v4.30.1)
+  - Downloading league/csv (9.24.1)
+  - Downloading filament/actions (v3.3.32)
+  - Downloading filament/notifications (v3.3.32)
+  - Downloading filament/infolists (v3.3.32)
+  - Downloading filament/forms (v3.3.32)
+  - Downloading filament/tables (v3.3.32)
+  - Downloading filament/filament (v3.3.32)
+  - Installing anourvalar/eloquent-serialize (1.3.3): Extracting archive
+  - Installing blade-ui-kit/blade-icons (1.8.0): Extracting archive
+  - Installing blade-ui-kit/blade-heroicons (2.6.0): Extracting archive
+  - Installing danharrin/date-format-converter (v0.3.1): Extracting archive
+  - Installing psr/cache (3.0.0): Extracting archive
+  - Installing doctrine/deprecations (1.1.5): Extracting archive
+  - Installing doctrine/dbal (4.3.0): Extracting archive
+  - Installing spatie/laravel-package-tools (1.92.7): Extracting archive
+  - Installing masterminds/html5 (2.9.0): Extracting archive
+  - Installing symfony/html-sanitizer (v7.3.0): Extracting archive
+  - Installing spatie/invade (2.1.0): Extracting archive
+  - Installing spatie/color (1.8.0): Extracting archive
+  - Installing ryangjchandler/blade-capture-directive (v1.1.0): Extracting archive
+  - Installing livewire/livewire (v3.6.4): Extracting archive
+  - Installing kirschbaum-development/eloquent-power-joins (4.2.6): Extracting archive
+  - Installing filament/support (v3.3.32): Extracting archive
+  - Installing filament/widgets (v3.3.32): Extracting archive
+  - Installing openspout/openspout (v4.30.1): Extracting archive
+  - Installing league/csv (9.24.1): Extracting archive
+  - Installing filament/actions (v3.3.32): Extracting archive
+  - Installing filament/notifications (v3.3.32): Extracting archive
+  - Installing filament/infolists (v3.3.32): Extracting archive
+  - Installing filament/forms (v3.3.32): Extracting archive
+  - Installing filament/tables (v3.3.32): Extracting archive
+  - Installing danharrin/livewire-rate-limiting (v2.1.0): Extracting archive
+  - Installing filament/filament (v3.3.32): Extracting archive
+Generating optimized autoload files
+> Illuminate\Foundation\ComposerScripts::postAutoloadDump
+> @php artisan package:discover --ansi
+
+   INFO  Discovering packages.
+
+  anourvalar/eloquent-serialize ................................................ DONE
+  blade-ui-kit/blade-heroicons ................................................. DONE
+  blade-ui-kit/blade-icons ..................................................... DONE
+  filament/actions ............................................................. DONE
+  filament/filament ............................................................ DONE
+  filament/forms ............................................................... DONE
+  filament/infolists ........................................................... DONE
+  filament/notifications ....................................................... DONE
+  filament/support ............................................................. DONE
+  filament/tables .............................................................. DONE
+  filament/widgets ............................................................. DONE
+  inertiajs/inertia-laravel .................................................... DONE
+  kirschbaum-development/eloquent-power-joins .................................. DONE
+  laravel/pail ................................................................. DONE
+  laravel/sail ................................................................. DONE
+  laravel/tinker ............................................................... DONE
+  livewire/livewire ............................................................ DONE
+  nesbot/carbon ................................................................ DONE
+  nunomaduro/collision ......................................................... DONE
+  nunomaduro/termwind .......................................................... DONE
+  ryangjchandler/blade-capture-directive ....................................... DONE
+  tightenco/ziggy .............................................................. DONE
+
+92 packages you are using are looking for funding.
+Use the `composer fund` command to find out more!
+> @php artisan vendor:publish --tag=laravel-assets --ansi --force
+
+   INFO  No publishable resources for tag [laravel-assets].
+
+No security vulnerability advisories found.
+
+ ┌ What is the ID? ─────────────────────────────────────────────┐
+ │ admin                                                        │
+ └──────────────────────────────────────────────────────────────┘
+
+   INFO  Filament panel [app/Providers/Filament/AdminPanelProvider.php] created successfully.
+
+   WARN  We've attempted to register the AdminPanelProvider in your [bootstrap/providers.php] file. If you get an error while trying to access your panel then this process has probably failed. You can manually register the service provider by adding it to the array.
+
+  ⇂ public/js/filament/forms/components/color-picker.js
+  ⇂ public/js/filament/forms/components/date-time-picker.js
+  ⇂ public/js/filament/forms/components/file-upload.js
+  ⇂ public/js/filament/forms/components/key-value.js
+  ⇂ public/js/filament/forms/components/markdown-editor.js
+  ⇂ public/js/filament/forms/components/rich-editor.js
+  ⇂ public/js/filament/forms/components/select.js
+  ⇂ public/js/filament/forms/components/tags-input.js
+  ⇂ public/js/filament/forms/components/textarea.js
+  ⇂ public/js/filament/tables/components/table.js
+  ⇂ public/js/filament/widgets/components/chart.js
+  ⇂ public/js/filament/widgets/components/stats-overview/stat/chart.js
+  ⇂ public/js/filament/filament/app.js
+  ⇂ public/js/filament/filament/echo.js
+  ⇂ public/js/filament/notifications/notifications.js
+  ⇂ public/js/filament/support/support.js
+  ⇂ public/css/filament/forms/forms.css
+  ⇂ public/css/filament/support/support.css
+  ⇂ public/css/filament/filament/app.css
+
+   INFO  Successfully published assets!
+
+   INFO  Configuration cache cleared successfully.
+
+   INFO  Route cache cleared successfully.
+
+   INFO  Compiled views cleared successfully.
+
+   INFO  Successfully upgraded!
+
+ ┌ All done! Would you like to show some love by starring the Filament repo on GitH… ┐
+ │ No                                                                                │
+ └───────────────────────────────────────────────────────────────────────────────────┘
+
+λ techxtrasol nextgen → λ git main* → composer run dev
+> Composer\Config::disableProcessTimeout
+> npx concurrently -c "#93c5fd,#c4b5fd,#fb7185,#fdba74" "php artisan serve" "php artisan queue:listen --tries=1" "php artisan pail --timeout=0" "npm run dev" --names=server,queue,logs,vite --kill-others
+[vite]
+[vite] > dev
+[vite] > vite
+[vite]
+[server]
+[server]    Error
+[server]
+[server]   Class "App\Filament\Resources\CicInvestmentResource\Pages\ListCicInvestments" not found
+[server]
+[server]   at app/Filament/Resources/CicInvestmentResource.php:184
+[server]     180▕
+[server]     181▕     public static function getPages(): array
+[server]     182▕     {
+[server]     183▕         return [
+[server]   ➜ 184▕             'index' => Pages\ListCicInvestments::route('/'),
+[server]     185▕             'create' => Pages\CreateCicInvestment::route('/create'),
+[server]     186▕             'view' => Pages\ViewCicInvestment::route('/{record}'),
+[server]     187▕             'edit' => Pages\EditCicInvestment::route('/{record}/edit'),
+[server]     188▕         ];
+[server]
+[server]       +37 vendor frames
+[server]
+[server]   38  [internal]:0
+[server]       Illuminate\Foundation\Application::{closure:Illuminate\Foundation\Application::boot():1130}(Object(Filament\FilamentServiceProvider), "Filament\FilamentServiceProvider")
+[server]       +6 vendor frames
+[server]
+[server]   45  artisan:16
+[server]       Illuminate\Foundation\Application::handleCommand(Object(Symfony\Component\Console\Input\ArgvInput))
+[server]
+[logs]
+[logs]    Error
+[logs]
+[logs]   Class "App\Filament\Resources\CicInvestmentResource\Pages\ListCicInvestments" not found
+[logs]
+[logs]   at app/Filament/Resources/CicInvestmentResource.php:184
+[logs]     180▕
+[logs]     181▕     public static function getPages(): array
+[logs]     182▕     {
+[logs]     183▕         return [
+[logs]   ➜ 184▕             'index' => Pages\ListCicInvestments::route('/'),
+[logs]     185▕             'create' => Pages\CreateCicInvestment::route('/create'),
+[logs]     186▕             'view' => Pages\ViewCicInvestment::route('/{record}'),
+[logs]     187▕             'edit' => Pages\EditCicInvestment::route('/{record}/edit'),
+[logs]     188▕         ];
+[logs]
+[logs]       +37 vendor frames
+[logs]
+[logs]   38  [internal]:0
+[logs]       Illuminate\Foundation\Application::{closure:Illuminate\Foundation\Application::boot():1130}(Object(Filament\FilamentServiceProvider), "Filament\FilamentServiceProvider")
+[logs]       +6 vendor frames
+[logs]
+[logs]   45  artisan:16
+[logs]       Illuminate\Foundation\Application::handleCommand(Object(Symfony\Component\Console\Input\ArgvInput))
+[logs]
+[queue]
+[queue]    Error
+[queue]
+[queue]   Class "App\Filament\Resources\CicInvestmentResource\Pages\ListCicInvestments" not found
+[queue]
+[queue]   at app/Filament/Resources/CicInvestmentResource.php:184
+[queue]     180▕
+[queue]     181▕     public static function getPages(): array
+[queue]     182▕     {
+[queue]     183▕         return [
+[queue]   ➜ 184▕             'index' => Pages\ListCicInvestments::route('/'),
+[queue]     185▕             'create' => Pages\CreateCicInvestment::route('/create'),
+[queue]     186▕             'view' => Pages\ViewCicInvestment::route('/{record}'),
+[queue]     187▕             'edit' => Pages\EditCicInvestment::route('/{record}/edit'),
+[queue]     188▕         ];
+[queue]
+[queue]       +37 vendor frames
+[queue]
+[queue]   38  [internal]:0
+[queue]       Illuminate\Foundation\Application::{closure:Illuminate\Foundation\Application::boot():1130}(Object(Filament\FilamentServiceProvider), "Filament\FilamentServiceProvider")
+[queue]       +6 vendor frames
+[queue]
+[queue]   45  artisan:16
+[queue]       Illuminate\Foundation\Application::handleCommand(Object(Symfony\Component\Console\Input\ArgvInput))
+[queue]
+[queue] php artisan queue:listen --tries=1 exited with code 1
+--> Sending SIGTERM to other processes..
+[logs] php artisan pail --timeout=0 exited with code 1
+--> Sending SIGTERM to other processes..
+[server] php artisan serve exited with code 1
+--> Sending SIGTERM to other processes..
+[vite] npm run dev exited with code SIGTERM
+Script npx concurrently -c "#93c5fd,#c4b5fd,#fb7185,#fdba74" "php artisan serve" "php artisan queue:listen --tries=1" "php artisan pail --timeout=0" "npm run dev" --names=server,queue,logs,vite --kill-others handling the dev event returned with error code 1
+λ techxtrasol nextgen → λ git main* → 
