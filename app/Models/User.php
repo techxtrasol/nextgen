@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -21,6 +22,15 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'joined_at',
+        'total_contributions',
+        'available_loan_limit',
+        'is_active',
+        'phone_number',
+        'address',
+        'id_number',
+        'date_of_birth',
     ];
 
     /**
@@ -43,6 +53,87 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'joined_at' => 'datetime',
+            'total_contributions' => 'decimal:2',
+            'available_loan_limit' => 'decimal:2',
+            'is_active' => 'boolean',
+            'date_of_birth' => 'date',
         ];
+    }
+
+    // Relationships
+    public function contributions(): HasMany
+    {
+        return $this->hasMany(MemberContribution::class);
+    }
+
+    public function loans(): HasMany
+    {
+        return $this->hasMany(Loan::class);
+    }
+
+    public function loanPayments(): HasMany
+    {
+        return $this->hasMany(LoanPayment::class, 'recorded_by');
+    }
+
+    public function interestDistributions(): HasMany
+    {
+        return $this->hasMany(InterestDistribution::class);
+    }
+
+    public function createdMilestones(): HasMany
+    {
+        return $this->hasMany(Milestone::class, 'created_by');
+    }
+
+    public function cicInvestments(): HasMany
+    {
+        return $this->hasMany(CicInvestment::class, 'recorded_by');
+    }
+
+    // Scopes
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
+    public function scopeMembers($query)
+    {
+        return $query->where('role', 'member');
+    }
+
+    public function scopeAdmins($query)
+    {
+        return $query->where('role', 'admin');
+    }
+
+    // Helper methods
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isTreasurer(): bool
+    {
+        return $this->role === 'treasurer';
+    }
+
+    public function calculateLoanLimit(): float
+    {
+        return $this->total_contributions; // Can borrow equivalent to contributions
+    }
+
+    public function updateContributions(): void
+    {
+        $totalContributions = $this->contributions()
+            ->where('status', 'approved')
+            ->where('type', 'deposit')
+            ->sum('amount');
+            
+        $this->update([
+            'total_contributions' => $totalContributions,
+            'available_loan_limit' => $totalContributions,
+        ]);
     }
 }
