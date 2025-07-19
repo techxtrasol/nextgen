@@ -27,7 +27,7 @@ class LoanController extends Controller
                 ->paginate(20);
         }
         
-        return view('loans.index', compact('loans'));
+        return inertia('loans/index', compact('loans'));
     }
     
     public function create()
@@ -37,7 +37,7 @@ class LoanController extends Controller
         $activeLoans = $user->loans()->active()->sum('balance');
         $availableLimit = $loanLimit - $activeLoans;
         
-        return view('loans.create', compact('loanLimit', 'activeLoans', 'availableLimit'));
+        return inertia('loans/create', compact('loanLimit', 'activeLoans', 'availableLimit'));
     }
     
     public function store(Request $request)

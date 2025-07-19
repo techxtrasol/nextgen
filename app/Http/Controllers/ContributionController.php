@@ -24,12 +24,12 @@ class ContributionController extends Controller
                 ->paginate(20);
         }
         
-        return view('contributions.index', compact('contributions'));
+        return inertia('contributions/index', compact('contributions'));
     }
     
     public function create()
     {
-        return view('contributions.create');
+        return inertia('contributions/create');
     }
     
     public function store(Request $request)
@@ -63,7 +63,7 @@ class ContributionController extends Controller
     {
         $this->authorize('view', $contribution);
         
-        return view('contributions.show', compact('contribution'));
+        return inertia('contributions/show', compact('contribution'));
     }
     
     public function approve(MemberContribution $contribution)

@@ -46,7 +46,7 @@ class WelfareController extends Controller
             ->orderBy('target_date')
             ->get();
             
-        return view('dashboard', compact(
+        return inertia('dashboard', compact(
             'totalMembers',
             'totalContributions',
             'totalLoansIssued',
