@@ -63,6 +63,10 @@ class CicInvestment extends Model
         static::creating(function ($investment) {
             $investment->current_value = $investment->amount;
             $investment->investment_reference = 'CIC-' . strtoupper(uniqid());
+            // Set default interest rate to 9.75% if not provided
+            if (!$investment->interest_rate) {
+                $investment->interest_rate = 9.75;
+            }
         });
     }
 }

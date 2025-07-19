@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Settings\ProfileController;
+use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\WelfareController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\ContributionController;
@@ -29,10 +30,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [WelfareController::class, 'dashboard'])->name('dashboard');
 
-    // Profile routes
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Settings routes
+    Route::prefix('settings')->name('settings.')->group(function () {
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+        Route::get('/password', [PasswordController::class, 'edit'])->name('password.edit');
+        Route::put('/password', [PasswordController::class, 'update'])->name('password.update');
+
+        Route::get('/appearance', function () {
+            return Inertia::render('settings/appearance');
+        })->name('appearance');
+    });
 
     // Member Contributions routes
     Route::prefix('contributions')->name('contributions.')->group(function () {
@@ -51,6 +61,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Loan routes
     Route::prefix('loans')->name('loans.')->group(function () {
         Route::get('/', [LoanController::class, 'index'])->name('index');
+        Route::get('/apply', [LoanController::class, 'apply'])->name('apply');
         Route::get('/create', [LoanController::class, 'create'])->name('create');
         Route::post('/', [LoanController::class, 'store'])->name('store');
         Route::get('/{loan}', [LoanController::class, 'show'])->name('show');
@@ -89,11 +100,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
     });
 
+    // User reports route (for members to see their own data)
+    Route::get('/my-contributions', [WelfareController::class, 'myContributions'])->name('my-contributions');
+
     // Reports routes (Admin/Treasurer only)
     Route::prefix('reports')->name('reports.')->middleware('role:admin,treasurer')->group(function () {
+        Route::get('/', [WelfareController::class, 'reportsIndex'])->name('index');
         Route::get('/members', [WelfareController::class, 'membersReport'])->name('members');
         Route::get('/financial-summary', [WelfareController::class, 'financialSummary'])->name('financial-summary');
         Route::get('/investments', [WelfareController::class, 'investmentsReport'])->name('investments');
+        Route::get('/cic-interest', [WelfareController::class, 'calculateCicInterest'])->name('cic-interest');
     });
 });
 

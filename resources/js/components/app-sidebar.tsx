@@ -3,7 +3,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { LayoutGrid, HandCoins, CreditCard, PiggyBank, Target, FileText } from 'lucide-react';
+import { CreditCard, FileText, HandCoins, LayoutGrid, PiggyBank, Target } from 'lucide-react';
 import AppLogo from './app-logo';
 
 export function AppSidebar() {
@@ -20,6 +20,11 @@ export function AppSidebar() {
         {
             title: 'Contributions',
             href: '/contributions',
+            icon: HandCoins,
+        },
+        {
+            title: 'My Contributions',
+            href: '/my-contributions',
             icon: HandCoins,
         },
         {
@@ -44,7 +49,18 @@ export function AppSidebar() {
             },
             {
                 title: 'Reports',
-                href: '/reports/financial-summary',
+                href: '/reports',
+                icon: FileText,
+            }
+        );
+    }
+
+    // Add admin only items
+    if (userRole === 'admin') {
+        mainNavItems.push(
+            {
+                title: 'Admin Panel',
+                href: '/admin',
                 icon: FileText,
             }
         );

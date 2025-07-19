@@ -121,7 +121,23 @@ class User extends Authenticatable
 
     public function calculateLoanLimit(): float
     {
-        return $this->total_contributions; // Can borrow equivalent to contributions
+        // Users can borrow up to their total contributions
+        // This means if they've saved 3000, they can borrow up to 3000
+        return $this->total_contributions;
+    }
+
+    public function getLoanEligibilityInfo(): array
+    {
+        $totalContributions = $this->total_contributions;
+        $activeLoans = $this->loans()->active()->sum('balance');
+        $availableLimit = $totalContributions - $activeLoans;
+
+        return [
+            'total_contributions' => $totalContributions,
+            'active_loans' => $activeLoans,
+            'available_limit' => max(0, $availableLimit),
+            'can_apply' => $totalContributions >= 1000, // Minimum 1000 to qualify
+        ];
     }
 
     public function updateContributions(): void
@@ -130,7 +146,7 @@ class User extends Authenticatable
             ->where('status', 'approved')
             ->where('type', 'deposit')
             ->sum('amount');
-            
+
         $this->update([
             'total_contributions' => $totalContributions,
             'available_loan_limit' => $totalContributions,

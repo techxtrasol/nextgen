@@ -30,15 +30,25 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->authGuard('web')
+            ->authMiddleware([
+                Authenticate::class,
+            ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                \App\Filament\Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
+                \App\Filament\Widgets\ContributionStatsWidget::class,
+                \App\Filament\Widgets\DashboardStatsWidget::class,
+                \App\Filament\Widgets\RecentContributionsWidget::class,
+                \App\Filament\Widgets\RecentLoansWidget::class,
+                \App\Filament\Widgets\ContributionChartWidget::class,
+                \App\Filament\Widgets\MilestoneProgressWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

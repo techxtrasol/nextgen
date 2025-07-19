@@ -11,38 +11,41 @@ class InterestDistribution extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
         'cic_investment_id',
-        'total_interest',
-        'member_share',
-        'share_percentage',
+        'user_id',
         'distribution_date',
-        'distribution_month',
-        'status',
+        'interest_rate',
+        'interest_amount',
+        'management_fee',
+        'withholding_tax',
+        'net_amount',
+        'distributed_by',
         'notes',
-        'processed_by',
+        'status',
     ];
 
     protected $casts = [
-        'total_interest' => 'decimal:2',
-        'member_share' => 'decimal:2',
-        'share_percentage' => 'decimal:2',
-        'distribution_date' => 'date',
+        'distribution_date' => 'datetime',
+        'interest_rate' => 'decimal:4',
+        'interest_amount' => 'decimal:2',
+        'management_fee' => 'decimal:2',
+        'withholding_tax' => 'decimal:2',
+        'net_amount' => 'decimal:2',
     ];
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
 
     public function cicInvestment(): BelongsTo
     {
         return $this->belongsTo(CicInvestment::class);
     }
 
-    public function processedBy(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'processed_by');
+        return $this->belongsTo(User::class);
+    }
+
+    public function distributedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'distributed_by');
     }
 
     public function scopePending($query)
@@ -55,40 +58,24 @@ class InterestDistribution extends Model
         return $query->where('status', 'distributed');
     }
 
-    public function scopeForMonth($query, $month)
+    public function scopeForMonth($query, $year, $month)
     {
-        return $query->where('distribution_month', $month);
+        return $query->whereYear('distribution_date', $year)
+                    ->whereMonth('distribution_date', $month);
     }
 
-    public static function distributeMonthlyInterest($cicInvestmentId, $month)
+    public function calculateNetAmount()
     {
-        $cicInvestment = CicInvestment::findOrFail($cicInvestmentId);
-        $totalInterest = $cicInvestment->calculateMonthlyInterest();
-        
-        // Get all active members
-        $activeMembers = User::where('is_active', true)->get();
-        $memberCount = $activeMembers->count();
-        
-        if ($memberCount === 0) {
-            return false;
-        }
-        
-        $sharePerMember = $totalInterest / $memberCount;
-        $sharePercentage = 100 / $memberCount;
-        
-        foreach ($activeMembers as $member) {
-            static::create([
-                'user_id' => $member->id,
-                'cic_investment_id' => $cicInvestmentId,
-                'total_interest' => $totalInterest,
-                'member_share' => $sharePerMember,
-                'share_percentage' => $sharePercentage,
-                'distribution_date' => now(),
-                'distribution_month' => $month,
-                'status' => 'pending',
-            ]);
-        }
-        
-        return true;
+        $managementFee = $this->interest_amount * 0.02; // 2% management fee
+        $withholdingTax = ($this->interest_amount - $managementFee) * 0.15; // 15% withholding tax
+        $netAmount = $this->interest_amount - $managementFee - $withholdingTax;
+
+        $this->update([
+            'management_fee' => $managementFee,
+            'withholding_tax' => $withholdingTax,
+            'net_amount' => $netAmount,
+        ]);
+
+        return $netAmount;
     }
 }
