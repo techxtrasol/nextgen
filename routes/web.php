@@ -92,10 +92,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Reports routes (Admin/Treasurer only)
     Route::prefix('reports')->name('reports.')->middleware('role:admin,treasurer')->group(function () {
         Route::get('/members', [WelfareController::class, 'membersReport'])->name('members');
-        Route::get('/contributions', [WelfareController::class, 'contributionsReport'])->name('contributions');
-        Route::get('/loans', [WelfareController::class, 'loansReport'])->name('loans');
-        Route::get('/investments', [WelfareController::class, 'investmentsReport'])->name('investments');
         Route::get('/financial-summary', [WelfareController::class, 'financialSummary'])->name('financial-summary');
+        Route::get('/investments', [WelfareController::class, 'investmentsReport'])->name('investments');
     });
 });
 
