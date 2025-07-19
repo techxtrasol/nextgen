@@ -19,37 +19,42 @@ Route::get('/', function () {
     ]);
 });
 
+// Home route
+Route::get('/home', function () {
+    return Inertia::render('Home');
+})->name('home');
+
 // Authenticated routes
 Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [WelfareController::class, 'dashboard'])->name('dashboard');
-    
+
     // Profile routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
+
     // Member Contributions routes
     Route::prefix('contributions')->name('contributions.')->group(function () {
         Route::get('/', [ContributionController::class, 'index'])->name('index');
         Route::get('/create', [ContributionController::class, 'create'])->name('create');
         Route::post('/', [ContributionController::class, 'store'])->name('store');
         Route::get('/{contribution}', [ContributionController::class, 'show'])->name('show');
-        
+
         // Admin/Treasurer only routes
         Route::middleware('role:admin,treasurer')->group(function () {
             Route::patch('/{contribution}/approve', [ContributionController::class, 'approve'])->name('approve');
             Route::patch('/{contribution}/reject', [ContributionController::class, 'reject'])->name('reject');
         });
     });
-    
+
     // Loan routes
     Route::prefix('loans')->name('loans.')->group(function () {
         Route::get('/', [LoanController::class, 'index'])->name('index');
         Route::get('/create', [LoanController::class, 'create'])->name('create');
         Route::post('/', [LoanController::class, 'store'])->name('store');
         Route::get('/{loan}', [LoanController::class, 'show'])->name('show');
-        
+
         // Admin/Treasurer only routes
         Route::middleware('role:admin,treasurer')->group(function () {
             Route::patch('/{loan}/approve', [LoanController::class, 'approve'])->name('approve');
@@ -57,7 +62,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/{loan}/payments', [LoanController::class, 'recordPayment'])->name('record-payment');
         });
     });
-    
+
     // CIC Investment routes (Admin/Treasurer only)
     Route::prefix('cic-investments')->name('cic-investments.')->middleware('role:admin,treasurer')->group(function () {
         Route::get('/', [CicInvestmentController::class, 'index'])->name('index');
@@ -67,12 +72,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::patch('/{cicInvestment}/update-value', [CicInvestmentController::class, 'updateValue'])->name('update-value');
         Route::post('/{cicInvestment}/distribute-interest', [CicInvestmentController::class, 'distributeInterest'])->name('distribute-interest');
     });
-    
+
     // Milestone routes
     Route::prefix('milestones')->name('milestones.')->group(function () {
         Route::get('/', [MilestoneController::class, 'index'])->name('index');
         Route::get('/{milestone}', [MilestoneController::class, 'show'])->name('show');
-        
+
         // Admin/Treasurer only routes
         Route::middleware('role:admin,treasurer')->group(function () {
             Route::get('/create', [MilestoneController::class, 'create'])->name('create');
@@ -83,7 +88,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::delete('/{milestone}', [MilestoneController::class, 'destroy'])->name('destroy');
         });
     });
-    
+
     // Reports routes (Admin/Treasurer only)
     Route::prefix('reports')->name('reports.')->middleware('role:admin,treasurer')->group(function () {
         Route::get('/members', [WelfareController::class, 'membersReport'])->name('members');
@@ -94,4 +99,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
