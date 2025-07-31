@@ -14,7 +14,7 @@ class ContributionChartWidget extends ChartWidget
     {
         $data = MemberContribution::where('type', 'deposit')
             ->where('status', 'approved')
-            ->selectRaw('strftime("%Y", transaction_date) as year, strftime("%m", transaction_date) as month, SUM(amount) as total')
+            ->selectRaw('DATE_FORMAT(transaction_date, "%Y") as year, DATE_FORMAT(transaction_date, "%m") as month, SUM(amount) as total')
             ->groupBy('year', 'month')
             ->orderBy('year', 'desc')
             ->orderBy('month', 'desc')
