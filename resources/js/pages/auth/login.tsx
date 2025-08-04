@@ -39,9 +39,9 @@ export default function Login({ status, canResetPassword }: LoginProps) {
         <AuthLayout title="Log in to your account" description="Enter your email and password below to log in">
             <Head title="Log in" />
 
-            <form className="flex flex-col gap-6" onSubmit={submit}>
-                <div className="grid gap-6">
-                    <div className="grid gap-2">
+            <form className="flex flex-col gap-8" onSubmit={submit}>
+                <div className="grid gap-8">
+                    <div className="grid gap-4">
                         <Label htmlFor="email">Email address</Label>
                         <Input
                             id="email"
@@ -53,11 +53,12 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             value={data.email}
                             onChange={(e) => setData('email', e.target.value)}
                             placeholder="email@example.com"
+                            className="h-12"
                         />
                         <InputError message={errors.email} />
                     </div>
 
-                    <div className="grid gap-2">
+                    <div className="grid gap-4">
                         <div className="flex items-center">
                             <Label htmlFor="password">Password</Label>
                             {canResetPassword && (
@@ -75,11 +76,12 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             value={data.password}
                             onChange={(e) => setData('password', e.target.value)}
                             placeholder="Password"
+                            className="h-12"
                         />
                         <InputError message={errors.password} />
                     </div>
 
-                    <div className="flex items-center space-x-3">
+                    <div className="flex items-center space-x-3 pt-2">
                         <Checkbox
                             id="remember"
                             name="remember"
@@ -90,13 +92,13 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                         <Label htmlFor="remember">Remember me</Label>
                     </div>
 
-                    <Button type="submit" className="mt-4 w-full" tabIndex={4} disabled={processing}>
-                        {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                    <Button type="submit" className="mt-6 w-full h-12" tabIndex={4} disabled={processing}>
+                        {processing && <LoaderCircle className="h-4 w-4 animate-spin mr-2" />}
                         Log in
                     </Button>
                 </div>
 
-                <div className="text-center text-sm text-muted-foreground">
+                <div className="text-center text-sm text-muted-foreground pt-4">
                     Don't have an account?{' '}
                     <TextLink href={route('register')} tabIndex={5}>
                         Sign up
@@ -104,7 +106,11 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                 </div>
             </form>
 
-            {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}
+            {status && (
+                <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg text-center text-sm font-medium text-green-600">
+                    {status}
+                </div>
+            )}
         </AuthLayout>
     );
 }

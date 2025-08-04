@@ -6,9 +6,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
-import { 
-    Plus, 
-    Search, 
+import {
+    Plus,
+    Search,
     Filter,
     DollarSign,
     TrendingUp,
@@ -63,8 +63,8 @@ export default function ContributionsIndex({ contributions }: ContributionsIndex
     const [typeFilter, setTypeFilter] = useState('all');
 
     const formatCurrency = (amount: number) => {
-        return new Intl.NumberFormat('en-KE', { 
-            style: 'currency', 
+        return new Intl.NumberFormat('en-KE', {
+            style: 'currency',
             currency: 'KES',
             minimumFractionDigits: 0
         }).format(amount);
@@ -76,7 +76,7 @@ export default function ContributionsIndex({ contributions }: ContributionsIndex
             'approved': 'bg-green-100 text-green-800 border-green-200',
             'rejected': 'bg-red-100 text-red-800 border-red-200',
         };
-        
+
         const icons = {
             'pending': Clock,
             'approved': CheckCircle,
@@ -84,7 +84,7 @@ export default function ContributionsIndex({ contributions }: ContributionsIndex
         };
 
         const Icon = icons[status as keyof typeof icons];
-        
+
         return (
             <Badge variant="outline" className={variants[status as keyof typeof variants]}>
                 <Icon className="h-3 w-3 mr-1" />
@@ -98,14 +98,14 @@ export default function ContributionsIndex({ contributions }: ContributionsIndex
             'deposit': 'bg-green-50 text-green-700 border-green-200',
             'withdrawal': 'bg-red-50 text-red-700 border-red-200',
         };
-        
+
         const icons = {
             'deposit': TrendingUp,
             'withdrawal': TrendingDown,
         };
 
         const Icon = icons[type as keyof typeof icons];
-        
+
         return (
             <Badge variant="outline" className={variants[type as keyof typeof variants]}>
                 <Icon className="h-3 w-3 mr-1" />
@@ -140,7 +140,7 @@ export default function ContributionsIndex({ contributions }: ContributionsIndex
                             contribution.description?.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesStatus = statusFilter === 'all' || contribution.status === statusFilter;
         const matchesType = typeFilter === 'all' || contribution.type === typeFilter;
-        
+
         return matchesSearch && matchesStatus && matchesType;
     });
 
@@ -153,13 +153,13 @@ export default function ContributionsIndex({ contributions }: ContributionsIndex
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Contributions" />
-            
-            <div className="flex-1 space-y-6 p-6">
+
+            <div className="flex-1 space-y-8 p-6">
                 {/* Header */}
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between mb-8">
                     <div>
-                        <h1 className="text-3xl font-bold tracking-tight">Contributions</h1>
-                        <p className="text-muted-foreground">Manage member contributions and withdrawals</p>
+                        <h1 className="text-3xl font-bold tracking-tight mb-3">Contributions</h1>
+                        <p className="text-muted-foreground text-lg">Manage member contributions and withdrawals</p>
                     </div>
                     <Button asChild>
                         <Link href="/contributions/create">
@@ -170,8 +170,8 @@ export default function ContributionsIndex({ contributions }: ContributionsIndex
                 </div>
 
                 {/* Stats */}
-                <div className="grid gap-4 md:grid-cols-3">
-                    <Card>
+                <div className="grid gap-6 md:grid-cols-3 mb-8">
+                    <Card className="hover:shadow-md transition-shadow duration-200">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-medium">Total Approved</CardTitle>
                             <DollarSign className="h-4 w-4 text-muted-foreground" />
@@ -182,7 +182,7 @@ export default function ContributionsIndex({ contributions }: ContributionsIndex
                         </CardContent>
                     </Card>
 
-                    <Card>
+                    <Card className="hover:shadow-md transition-shadow duration-200">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-medium">Pending Approval</CardTitle>
                             <Clock className="h-4 w-4 text-muted-foreground" />
@@ -193,7 +193,7 @@ export default function ContributionsIndex({ contributions }: ContributionsIndex
                         </CardContent>
                     </Card>
 
-                    <Card>
+                    <Card className="hover:shadow-md transition-shadow duration-200">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-medium">Total Transactions</CardTitle>
                             <TrendingUp className="h-4 w-4 text-muted-foreground" />
@@ -206,12 +206,12 @@ export default function ContributionsIndex({ contributions }: ContributionsIndex
                 </div>
 
                 {/* Filters */}
-                <Card>
-                    <CardHeader>
+                <Card className="hover:shadow-md transition-shadow duration-200 mb-8">
+                    <CardHeader className="pb-4">
                         <CardTitle className="text-lg">Filter Contributions</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="flex gap-4 flex-wrap">
+                        <div className="flex gap-6 flex-wrap">
                             <div className="flex-1 min-w-[200px]">
                                 <div className="relative">
                                     <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -249,8 +249,8 @@ export default function ContributionsIndex({ contributions }: ContributionsIndex
                 </Card>
 
                 {/* Contributions Table */}
-                <Card>
-                    <CardHeader>
+                <Card className="hover:shadow-md transition-shadow duration-200">
+                    <CardHeader className="pb-4">
                         <CardTitle>Contributions History</CardTitle>
                         <CardDescription>
                             {filteredContributions.length} of {contributions.total} contributions
@@ -272,7 +272,7 @@ export default function ContributionsIndex({ contributions }: ContributionsIndex
                                 </thead>
                                 <tbody>
                                     {filteredContributions.map((contribution) => (
-                                        <tr key={contribution.id} className="border-b hover:bg-muted/50">
+                                        <tr key={contribution.id} className="border-b hover:bg-muted/50 transition-colors duration-150">
                                             <td className="p-4">
                                                 <div>
                                                     <p className="font-medium">{contribution.user.name}</p>
@@ -345,9 +345,10 @@ export default function ContributionsIndex({ contributions }: ContributionsIndex
                         </div>
 
                         {filteredContributions.length === 0 && (
-                            <div className="text-center py-8 text-muted-foreground">
-                                <DollarSign className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                                <p>No contributions found matching your criteria.</p>
+                            <div className="text-center py-12 text-muted-foreground">
+                                <DollarSign className="h-16 w-16 mx-auto mb-4 opacity-50" />
+                                <p className="text-lg">No contributions found matching your criteria.</p>
+                                <p className="text-sm mt-2">Try adjusting your search or filter settings.</p>
                             </div>
                         )}
                     </CardContent>

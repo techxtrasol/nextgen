@@ -45,11 +45,11 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
             <Head title="Profile settings" />
 
             <SettingsLayout>
-                <div className="space-y-6">
+                <div className="space-y-8 p-6">
                     <HeadingSmall title="Profile information" description="Update your name and email address" />
 
-                    <form onSubmit={submit} className="space-y-6">
-                        <div className="grid gap-2">
+                    <form onSubmit={submit} className="space-y-8">
+                        <div className="grid gap-4">
                             <Label htmlFor="name">Name</Label>
 
                             <Input
@@ -65,7 +65,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                             <InputError className="mt-2" message={errors.name} />
                         </div>
 
-                        <div className="grid gap-2">
+                        <div className="grid gap-4">
                             <Label htmlFor="email">Email address</Label>
 
                             <Input
@@ -83,29 +83,29 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                         </div>
 
                         {mustVerifyEmail && auth.user.email_verified_at === null && (
-                            <div>
-                                <p className="-mt-4 text-sm text-muted-foreground">
+                            <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                                <p className="text-sm text-yellow-800">
                                     Your email address is unverified.{' '}
                                     <Link
                                         href={route('verification.send')}
                                         method="post"
                                         as="button"
-                                        className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
+                                        className="text-yellow-900 underline decoration-yellow-400 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current"
                                     >
                                         Click here to resend the verification email.
                                     </Link>
                                 </p>
 
                                 {status === 'verification-link-sent' && (
-                                    <div className="mt-2 text-sm font-medium text-green-600">
+                                    <div className="mt-3 text-sm font-medium text-green-600">
                                         A new verification link has been sent to your email address.
                                     </div>
                                 )}
                             </div>
                         )}
 
-                        <div className="flex items-center gap-4">
-                            <Button disabled={processing}>Save</Button>
+                        <div className="flex items-center gap-4 pt-4">
+                            <Button disabled={processing} className="min-w-[100px]">Save</Button>
 
                             <Transition
                                 show={recentlySuccessful}
@@ -120,7 +120,9 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
                     </form>
                 </div>
 
-                <DeleteUser />
+                <div className="mt-8">
+                    <DeleteUser />
+                </div>
             </SettingsLayout>
         </AppLayout>
     );

@@ -68,18 +68,18 @@ export default function ReportsIndex({
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Reports" />
 
-      <div className="flex-1 space-y-6 p-6">
+      <div className="flex-1 space-y-8 p-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Reports</h1>
-            <p className="text-muted-foreground">Generate and view comprehensive reports</p>
+            <h1 className="text-3xl font-bold tracking-tight mb-3">Reports</h1>
+            <p className="text-muted-foreground text-lg">Generate and view comprehensive reports</p>
           </div>
         </div>
 
         {/* Summary Stats */}
-        <div className="grid gap-4 md:grid-cols-4">
-          <Card>
+        <div className="grid gap-6 md:grid-cols-4 mb-8">
+          <Card className="hover:shadow-md transition-shadow duration-200">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Total Members</CardTitle>
               <Users className="h-4 w-4 text-muted-foreground" />
@@ -90,7 +90,7 @@ export default function ReportsIndex({
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow duration-200">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Total Contributions</CardTitle>
               <DollarSign className="h-4 w-4 text-muted-foreground" />
@@ -101,7 +101,7 @@ export default function ReportsIndex({
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow duration-200">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Total Loans</CardTitle>
               <BarChart3 className="h-4 w-4 text-muted-foreground" />
@@ -112,7 +112,7 @@ export default function ReportsIndex({
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow duration-200">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Total Investments</CardTitle>
               <TrendingUp className="h-4 w-4 text-muted-foreground" />
@@ -129,15 +129,15 @@ export default function ReportsIndex({
           {reports.map((report) => {
             const Icon = report.icon;
             return (
-              <Card key={report.href} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="flex items-center space-x-3">
-                    <div className={`p-2 rounded-lg ${report.bgColor}`}>
+              <Card key={report.href} className="hover:shadow-lg transition-shadow duration-200">
+                <CardHeader className="pb-4">
+                  <div className="flex items-center space-x-4">
+                    <div className={`p-3 rounded-lg ${report.bgColor}`}>
                       <Icon className={`h-6 w-6 ${report.color}`} />
                     </div>
                     <div>
                       <CardTitle className="text-lg">{report.title}</CardTitle>
-                      <CardDescription>{report.description}</CardDescription>
+                      <CardDescription className="mt-2">{report.description}</CardDescription>
                     </div>
                   </div>
                 </CardHeader>

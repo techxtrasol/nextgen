@@ -1,5 +1,5 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -7,15 +7,15 @@ import { Separator } from '@/components/ui/separator';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, useForm } from '@inertiajs/react';
-import { 
+import {
     ArrowLeft,
+    Calculator,
     DollarSign,
-    TrendingUp,
-    TrendingDown,
     Info,
-    Calculator
+    TrendingDown,
+    TrendingUp
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Dashboard', href: '/dashboard' },
@@ -25,7 +25,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function CreateContribution() {
     const [calculatedAmount, setCalculatedAmount] = useState(0);
-    
+
     const { data, setData, post, processing, errors } = useForm({
         amount: '',
         type: 'deposit',
@@ -33,8 +33,8 @@ export default function CreateContribution() {
     });
 
     const formatCurrency = (amount: number) => {
-        return new Intl.NumberFormat('en-KE', { 
-            style: 'currency', 
+        return new Intl.NumberFormat('en-KE', {
+            style: 'currency',
             currency: 'KES',
             minimumFractionDigits: 0
         }).format(amount);
@@ -59,29 +59,29 @@ export default function CreateContribution() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Create Contribution" />
-            
-            <div className="flex-1 space-y-6 p-6 max-w-2xl mx-auto">
+
+            <div className="flex-1 space-y-8 p-6 max-w-2xl mx-auto">
                 {/* Header */}
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 mb-8">
                     <Button asChild variant="outline" size="sm">
                         <Link href="/contributions">
                             <ArrowLeft className="h-4 w-4" />
                         </Link>
                     </Button>
                     <div>
-                        <h1 className="text-3xl font-bold tracking-tight">Create Contribution</h1>
-                        <p className="text-muted-foreground">Submit a new contribution or withdrawal request</p>
+                        <h1 className="text-3xl font-bold tracking-tight mb-3">Create Contribution</h1>
+                        <p className="text-muted-foreground text-lg">Submit a new contribution or withdrawal request</p>
                     </div>
                 </div>
 
                 {/* Info Banner */}
-                <Card className="border-blue-200 bg-blue-50">
-                    <CardContent className="p-4">
-                        <div className="flex items-start gap-3">
+                <Card className="border-blue-200 bg-blue-50 hover:shadow-md transition-shadow duration-200">
+                    <CardContent className="p-6">
+                        <div className="flex items-start gap-4">
                             <Info className="h-5 w-5 text-blue-600 mt-0.5" />
                             <div className="text-sm text-blue-800">
-                                <p className="font-medium mb-1">Important Information</p>
-                                <ul className="space-y-1 text-xs">
+                                <p className="font-medium mb-3">Important Information</p>
+                                <ul className="space-y-2 text-xs">
                                     <li>• All contributions require approval from an administrator or treasurer</li>
                                     <li>• Minimum contribution amount is KES 100</li>
                                     <li>• Your loan limit is based on your total approved contributions</li>
@@ -93,8 +93,8 @@ export default function CreateContribution() {
                 </Card>
 
                 {/* Form */}
-                <Card>
-                    <CardHeader>
+                <Card className="hover:shadow-md transition-shadow duration-200">
+                    <CardHeader className="pb-4">
                         <CardTitle className="flex items-center gap-2">
                             <DollarSign className="h-5 w-5" />
                             Contribution Details
@@ -104,9 +104,9 @@ export default function CreateContribution() {
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <form onSubmit={handleSubmit} className="space-y-6">
+                        <form onSubmit={handleSubmit} className="space-y-8">
                             {/* Type Selection */}
-                            <div className="space-y-2">
+                            <div className="space-y-3">
                                 <Label htmlFor="type">Transaction Type</Label>
                                 <Select value={data.type} onValueChange={(value) => setData('type', value)}>
                                     <SelectTrigger>
@@ -133,7 +133,7 @@ export default function CreateContribution() {
                             </div>
 
                             {/* Amount Input */}
-                            <div className="space-y-2">
+                            <div className="space-y-3">
                                 <Label htmlFor="amount">Amount (KES)</Label>
                                 <div className="relative">
                                     <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -151,9 +151,9 @@ export default function CreateContribution() {
                                 {errors.amount && (
                                     <p className="text-sm text-red-600">{errors.amount}</p>
                                 )}
-                                
+
                                 {/* Quick Amount Buttons */}
-                                <div className="flex flex-wrap gap-2 mt-2">
+                                <div className="flex flex-wrap gap-3 mt-3">
                                     <span className="text-sm text-muted-foreground self-center">Quick amounts:</span>
                                     {quickAmounts.map((amount) => (
                                         <Button
@@ -162,6 +162,7 @@ export default function CreateContribution() {
                                             variant="outline"
                                             size="sm"
                                             onClick={() => setData('amount', amount.toString())}
+                                            className="hover:bg-muted/50"
                                         >
                                             {formatCurrency(amount)}
                                         </Button>
@@ -171,16 +172,16 @@ export default function CreateContribution() {
 
                             {/* Amount Preview */}
                             {calculatedAmount > 0 && (
-                                <Card className="bg-muted/50">
-                                    <CardContent className="p-4">
-                                        <div className="flex items-center gap-3">
-                                            <Calculator className="h-5 w-5 text-muted-foreground" />
+                                <Card className="bg-muted/50 hover:shadow-md transition-shadow duration-200">
+                                    <CardContent className="p-6">
+                                        <div className="flex items-center gap-4">
+                                            <Calculator className="h-6 w-6 text-muted-foreground" />
                                             <div>
-                                                <p className="text-sm font-medium">Amount Preview</p>
-                                                <p className="text-lg font-bold">
+                                                <p className="text-sm font-medium mb-2">Amount Preview</p>
+                                                <p className="text-xl font-bold">
                                                     {data.type === 'deposit' ? '+' : '-'}{formatCurrency(calculatedAmount)}
                                                 </p>
-                                                <p className="text-xs text-muted-foreground">
+                                                <p className="text-xs text-muted-foreground mt-1">
                                                     This {data.type} will {data.type === 'deposit' ? 'increase' : 'decrease'} your contribution balance
                                                 </p>
                                             </div>
@@ -190,7 +191,7 @@ export default function CreateContribution() {
                             )}
 
                             {/* Description */}
-                            <div className="space-y-2">
+                            <div className="space-y-3">
                                 <Label htmlFor="description">Description (Optional)</Label>
                                 <Input
                                     id="description"
@@ -206,17 +207,17 @@ export default function CreateContribution() {
                                 </p>
                             </div>
 
-                            <Separator />
+                            <Separator className="my-6" />
 
                             {/* Submit Actions */}
-                            <div className="flex gap-4 justify-end">
+                            <div className="flex gap-4 justify-end pt-4">
                                 <Button asChild variant="outline">
                                     <Link href="/contributions">
                                         Cancel
                                     </Link>
                                 </Button>
-                                <Button 
-                                    type="submit" 
+                                <Button
+                                    type="submit"
                                     disabled={processing || !data.amount || parseFloat(data.amount) < 100}
                                     className="min-w-[120px]"
                                 >
@@ -228,12 +229,12 @@ export default function CreateContribution() {
                 </Card>
 
                 {/* Help Section */}
-                <Card>
-                    <CardHeader>
+                <Card className="hover:shadow-md transition-shadow duration-200">
+                    <CardHeader className="pb-4">
                         <CardTitle className="text-lg">Need Help?</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="space-y-2 text-sm text-muted-foreground">
+                        <div className="space-y-4 text-sm text-muted-foreground">
                             <p><strong>Deposits:</strong> Add money to your welfare association contribution. This increases your available loan limit.</p>
                             <p><strong>Withdrawals:</strong> Request to withdraw money from your contributions. Subject to association rules and approval.</p>
                             <p><strong>Processing:</strong> All requests are reviewed by administrators or treasurers before approval.</p>

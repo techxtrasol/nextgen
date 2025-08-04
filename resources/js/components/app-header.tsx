@@ -49,7 +49,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
     return (
         <>
             <div className="border-b border-sidebar-border/80">
-                <div className="mx-auto flex h-16 items-center px-4 md:max-w-7xl">
+                <div className="mx-auto flex h-20 items-center px-6 md:max-w-7xl">
                     {/* Mobile Menu */}
                     <div className="lg:hidden">
                         <Sheet>
@@ -99,7 +99,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <div className="ml-6 hidden h-full items-center space-x-6 lg:flex">
+                    <div className="ml-8 hidden h-full items-center space-x-8 lg:flex">
                         <NavigationMenu className="flex h-full items-stretch">
                             <NavigationMenuList className="flex h-full items-stretch space-x-2">
                                 {mainNavItems.map((item, index) => (
@@ -124,8 +124,8 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                         </NavigationMenu>
                     </div>
 
-                    <div className="ml-auto flex items-center space-x-2">
-                        <div className="relative flex items-center space-x-1">
+                    <div className="ml-auto flex items-center space-x-4">
+                        <div className="relative flex items-center space-x-2">
                             <Button variant="ghost" size="icon" className="group h-9 w-9 cursor-pointer">
                                 <Search className="!size-5 opacity-80 group-hover:opacity-100" />
                             </Button>
@@ -172,7 +172,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
             </div>
             {breadcrumbs.length > 1 && (
                 <div className="flex w-full border-b border-sidebar-border/70">
-                    <div className="mx-auto flex h-12 w-full items-center justify-start px-4 text-neutral-500 md:max-w-7xl">
+                    <div className="mx-auto flex h-14 w-full items-center justify-start px-6 text-neutral-500 md:max-w-7xl">
                         <Breadcrumbs breadcrumbs={breadcrumbs} />
                     </div>
                 </div>

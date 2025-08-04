@@ -117,12 +117,12 @@ export default function MilestonesIndex({
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="Milestones" />
 
-      <div className="flex-1 space-y-6 p-6">
+      <div className="flex-1 space-y-8 p-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Milestones</h1>
-            <p className="text-muted-foreground">Track progress towards organizational goals</p>
+            <h1 className="text-3xl font-bold tracking-tight mb-3">Milestones</h1>
+            <p className="text-muted-foreground text-lg">Track progress towards organizational goals</p>
           </div>
           <Button asChild>
             <Link href="/milestones/create">
@@ -133,8 +133,8 @@ export default function MilestonesIndex({
         </div>
 
         {/* Stats */}
-        <div className="grid gap-4 md:grid-cols-4">
-          <Card>
+        <div className="grid gap-6 md:grid-cols-4 mb-8">
+          <Card className="hover:shadow-md transition-shadow duration-200">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Active Milestones</CardTitle>
               <Target className="h-4 w-4 text-muted-foreground" />
@@ -145,7 +145,7 @@ export default function MilestonesIndex({
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow duration-200">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Achieved</CardTitle>
               <CheckCircle className="h-4 w-4 text-muted-foreground" />
@@ -156,7 +156,7 @@ export default function MilestonesIndex({
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow duration-200">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Target Amount</CardTitle>
               <DollarSign className="h-4 w-4 text-muted-foreground" />
@@ -167,7 +167,7 @@ export default function MilestonesIndex({
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow duration-200">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Current Progress</CardTitle>
               <TrendingUp className="h-4 w-4 text-muted-foreground" />
@@ -180,20 +180,20 @@ export default function MilestonesIndex({
         </div>
 
         {/* Overall Progress */}
-        <Card>
-          <CardHeader>
+        <Card className="hover:shadow-md transition-shadow duration-200 mb-8">
+          <CardHeader className="pb-4">
             <CardTitle>Overall Progress</CardTitle>
             <CardDescription>
               Combined progress across all active milestones
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2">
+            <div className="space-y-4">
               <div className="flex justify-between text-sm">
                 <span>Progress</span>
                 <span>{overallProgress.toFixed(1)}%</span>
               </div>
-              <Progress value={overallProgress} className="h-2" />
+              <Progress value={overallProgress} className="h-3" />
               <div className="flex justify-between text-xs text-muted-foreground">
                 <span>{formatCurrency(totalCurrentAmount)} raised</span>
                 <span>{formatCurrency(totalTargetAmount)} target</span>
@@ -209,29 +209,29 @@ export default function MilestonesIndex({
             const isOverdue = new Date(milestone.target_date) < new Date() && milestone.status === 'active';
 
             return (
-              <Card key={milestone.id} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
+              <Card key={milestone.id} className="hover:shadow-lg transition-shadow duration-200">
+                <CardHeader className="pb-4">
                   <div className="flex items-start justify-between">
-                    <div className="space-y-1">
+                    <div className="space-y-2">
                       <CardTitle className="text-lg">{milestone.title}</CardTitle>
                       <CardDescription className="line-clamp-2">
                         {milestone.description}
                       </CardDescription>
                     </div>
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-2">
                       {getPriorityBadge(milestone.priority)}
                       {getStatusBadge(milestone.status)}
                     </div>
                   </div>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-6">
                   {/* Progress */}
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     <div className="flex justify-between text-sm">
                       <span>Progress</span>
                       <span>{progress.toFixed(1)}%</span>
                     </div>
-                    <Progress value={progress} className="h-2" />
+                    <Progress value={progress} className="h-3" />
                     <div className="flex justify-between text-xs text-muted-foreground">
                       <span>{formatCurrency(milestone.current_amount)}</span>
                       <span>{formatCurrency(milestone.target_amount)}</span>
@@ -255,7 +255,7 @@ export default function MilestonesIndex({
                   </div>
 
                   {/* Actions */}
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 pt-2">
                     <Button asChild variant="outline" size="sm" className="flex-1">
                       <Link href={`/milestones/${milestone.id}`}>
                         View Details
@@ -276,10 +276,11 @@ export default function MilestonesIndex({
         </div>
 
         {milestones.data.length === 0 && (
-          <Card>
-            <CardContent className="text-center py-8">
-              <Target className="h-12 w-12 mx-auto mb-4 opacity-50" />
-              <p className="text-muted-foreground">No milestones found.</p>
+          <Card className="hover:shadow-md transition-shadow duration-200">
+            <CardContent className="text-center py-12">
+              <Target className="h-16 w-16 mx-auto mb-4 opacity-50" />
+              <p className="text-lg text-muted-foreground">No milestones found.</p>
+              <p className="text-sm text-muted-foreground mt-2">Create your first milestone to get started.</p>
             </CardContent>
           </Card>
         )}

@@ -90,12 +90,12 @@ export default function CicInvestmentsIndex({
     <AppLayout breadcrumbs={breadcrumbs}>
       <Head title="CIC Investments" />
 
-      <div className="flex-1 space-y-6 p-6">
+      <div className="flex-1 space-y-8 p-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">CIC Investments</h1>
-            <p className="text-muted-foreground">Manage CIC investment portfolio</p>
+            <h1 className="text-3xl font-bold tracking-tight mb-3">CIC Investments</h1>
+            <p className="text-muted-foreground text-lg">Manage CIC investment portfolio</p>
           </div>
           <Button asChild>
             <Link href="/cic-investments/create">
@@ -106,8 +106,8 @@ export default function CicInvestmentsIndex({
         </div>
 
         {/* Stats */}
-        <div className="grid gap-4 md:grid-cols-3">
-          <Card>
+        <div className="grid gap-6 md:grid-cols-3 mb-8">
+          <Card className="hover:shadow-md transition-shadow duration-200">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Total Invested</CardTitle>
               <DollarSign className="h-4 w-4 text-muted-foreground" />
@@ -118,7 +118,7 @@ export default function CicInvestmentsIndex({
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow duration-200">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Current Value</CardTitle>
               <TrendingUp className="h-4 w-4 text-muted-foreground" />
@@ -129,7 +129,7 @@ export default function CicInvestmentsIndex({
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-md transition-shadow duration-200">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Interest Earned</CardTitle>
               <TrendingUp className="h-4 w-4 text-muted-foreground" />
@@ -142,8 +142,8 @@ export default function CicInvestmentsIndex({
         </div>
 
         {/* Investments Table */}
-        <Card>
-          <CardHeader>
+        <Card className="hover:shadow-md transition-shadow duration-200">
+          <CardHeader className="pb-4">
             <CardTitle>Investment Portfolio</CardTitle>
             <CardDescription>
               {investments.data.length} of {investments.total} investments
@@ -166,7 +166,7 @@ export default function CicInvestmentsIndex({
                 </thead>
                 <tbody>
                   {investments.data.map((investment) => (
-                    <tr key={investment.id} className="border-b hover:bg-muted/50">
+                    <tr key={investment.id} className="border-b hover:bg-muted/50 transition-colors duration-150">
                       <td className="p-4">
                         <code className="text-xs bg-muted px-2 py-1 rounded">
                           {investment.investment_reference}
@@ -215,9 +215,10 @@ export default function CicInvestmentsIndex({
             </div>
 
             {investments.data.length === 0 && (
-              <div className="text-center py-8 text-muted-foreground">
-                <TrendingUp className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p>No investments found.</p>
+              <div className="text-center py-12 text-muted-foreground">
+                <TrendingUp className="h-16 w-16 mx-auto mb-4 opacity-50" />
+                <p className="text-lg">No investments found.</p>
+                <p className="text-sm mt-2">Create your first investment to get started.</p>
               </div>
             )}
           </CardContent>

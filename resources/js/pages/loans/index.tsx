@@ -1,25 +1,25 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
-import { 
-    Plus, 
-    Search,
+import {
+    AlertTriangle,
+    Calculator,
+    Calendar,
+    Check,
+    CheckCircle,
+    Clock,
     CreditCard,
     DollarSign,
-    Clock,
-    CheckCircle,
-    AlertTriangle,
-    XCircle,
     Eye,
-    Check,
+    Plus,
+    Search,
     X,
-    Calculator,
-    Calendar
+    XCircle
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -68,8 +68,8 @@ export default function LoansIndex({ loans }: LoansIndexProps) {
     const [statusFilter, setStatusFilter] = useState('all');
 
     const formatCurrency = (amount: number) => {
-        return new Intl.NumberFormat('en-KE', { 
-            style: 'currency', 
+        return new Intl.NumberFormat('en-KE', {
+            style: 'currency',
             currency: 'KES',
             minimumFractionDigits: 0
         }).format(amount);
@@ -83,7 +83,7 @@ export default function LoansIndex({ loans }: LoansIndexProps) {
             'defaulted': 'bg-red-100 text-red-800 border-red-200',
             'rejected': 'bg-gray-100 text-gray-800 border-gray-200',
         };
-        
+
         const icons = {
             'pending': Clock,
             'active': CreditCard,
@@ -93,7 +93,7 @@ export default function LoansIndex({ loans }: LoansIndexProps) {
         };
 
         const Icon = icons[status as keyof typeof icons];
-        
+
         return (
             <Badge variant="outline" className={variants[status as keyof typeof variants]}>
                 <Icon className="h-3 w-3 mr-1" />
@@ -128,9 +128,9 @@ export default function LoansIndex({ loans }: LoansIndexProps) {
 
     const filteredLoans = loans.data.filter(loan => {
         const matchesSearch = loan.user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                            loan.purpose.toLowerCase().includes(searchTerm.toLowerCase());
+            loan.purpose.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesStatus = statusFilter === 'all' || loan.status === statusFilter;
-        
+
         return matchesSearch && matchesStatus;
     });
 
@@ -147,13 +147,13 @@ export default function LoansIndex({ loans }: LoansIndexProps) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Loans" />
-            
-            <div className="flex-1 space-y-6 p-6">
+
+            <div className="flex-1 space-y-8 p-6">
                 {/* Header */}
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between mb-8">
                     <div>
-                        <h1 className="text-3xl font-bold tracking-tight">Loans</h1>
-                        <p className="text-muted-foreground">Manage loan applications and payments</p>
+                        <h1 className="text-3xl font-bold tracking-tight mb-3">Loans</h1>
+                        <p className="text-muted-foreground text-lg">Manage loan applications and payments</p>
                     </div>
                     <Button asChild>
                         <Link href="/loans/create">
@@ -164,8 +164,8 @@ export default function LoansIndex({ loans }: LoansIndexProps) {
                 </div>
 
                 {/* Stats Overview */}
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
-                    <Card>
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-6 mb-8">
+                    <Card className="hover:shadow-md transition-shadow duration-200">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-medium">Pending</CardTitle>
                             <Clock className="h-4 w-4 text-yellow-600" />
@@ -176,7 +176,7 @@ export default function LoansIndex({ loans }: LoansIndexProps) {
                         </CardContent>
                     </Card>
 
-                    <Card>
+                    <Card className="hover:shadow-md transition-shadow duration-200">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-medium">Active</CardTitle>
                             <CreditCard className="h-4 w-4 text-blue-600" />
@@ -187,7 +187,7 @@ export default function LoansIndex({ loans }: LoansIndexProps) {
                         </CardContent>
                     </Card>
 
-                    <Card>
+                    <Card className="hover:shadow-md transition-shadow duration-200">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-medium">Completed</CardTitle>
                             <CheckCircle className="h-4 w-4 text-green-600" />
@@ -198,7 +198,7 @@ export default function LoansIndex({ loans }: LoansIndexProps) {
                         </CardContent>
                     </Card>
 
-                    <Card>
+                    <Card className="hover:shadow-md transition-shadow duration-200">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-medium">Defaulted</CardTitle>
                             <AlertTriangle className="h-4 w-4 text-red-600" />
@@ -209,7 +209,7 @@ export default function LoansIndex({ loans }: LoansIndexProps) {
                         </CardContent>
                     </Card>
 
-                    <Card>
+                    <Card className="hover:shadow-md transition-shadow duration-200">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-medium">Total Issued</CardTitle>
                             <DollarSign className="h-4 w-4 text-muted-foreground" />
@@ -220,7 +220,7 @@ export default function LoansIndex({ loans }: LoansIndexProps) {
                         </CardContent>
                     </Card>
 
-                    <Card>
+                    <Card className="hover:shadow-md transition-shadow duration-200">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-medium">Outstanding</CardTitle>
                             <Calculator className="h-4 w-4 text-muted-foreground" />
@@ -233,12 +233,12 @@ export default function LoansIndex({ loans }: LoansIndexProps) {
                 </div>
 
                 {/* Filters */}
-                <Card>
-                    <CardHeader>
+                <Card className="hover:shadow-md transition-shadow duration-200 mb-8">
+                    <CardHeader className="pb-4">
                         <CardTitle className="text-lg">Filter Loans</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="flex gap-4 flex-wrap">
+                        <div className="flex gap-6 flex-wrap">
                             <div className="flex-1 min-w-[200px]">
                                 <div className="relative">
                                     <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -268,8 +268,8 @@ export default function LoansIndex({ loans }: LoansIndexProps) {
                 </Card>
 
                 {/* Loans Table */}
-                <Card>
-                    <CardHeader>
+                <Card className="hover:shadow-md transition-shadow duration-200">
+                    <CardHeader className="pb-4">
                         <CardTitle>Loan Applications</CardTitle>
                         <CardDescription>
                             {filteredLoans.length} of {loans.total} loans
@@ -291,9 +291,8 @@ export default function LoansIndex({ loans }: LoansIndexProps) {
                                 </thead>
                                 <tbody>
                                     {filteredLoans.map((loan) => (
-                                        <tr key={loan.id} className={`border-b hover:bg-muted/50 ${
-                                            isOverdue(loan) ? 'bg-red-50' : ''
-                                        }`}>
+                                        <tr key={loan.id} className={`border-b hover:bg-muted/50 transition-colors duration-150 ${isOverdue(loan) ? 'bg-red-50' : ''
+                                            }`}>
                                             <td className="p-4">
                                                 <div>
                                                     <p className="font-medium">{loan.user.name}</p>
@@ -329,16 +328,16 @@ export default function LoansIndex({ loans }: LoansIndexProps) {
                                             </td>
                                             <td className="p-4">
                                                 {loan.status === 'active' && (
-                                                    <div className="space-y-1">
+                                                    <div className="space-y-2">
                                                         <div className="flex justify-between text-xs">
                                                             <span>Paid: {formatCurrency(loan.amount_paid)}</span>
                                                             <span>Balance: {formatCurrency(loan.balance)}</span>
                                                         </div>
                                                         <div className="w-full bg-gray-200 rounded-full h-2">
-                                                            <div 
-                                                                className="bg-blue-600 h-2 rounded-full" 
-                                                                style={{ 
-                                                                    width: `${Math.min((loan.amount_paid / loan.total_amount) * 100, 100)}%` 
+                                                            <div
+                                                                className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                                                                style={{
+                                                                    width: `${Math.min((loan.amount_paid / loan.total_amount) * 100, 100)}%`
                                                                 }}
                                                             ></div>
                                                         </div>
@@ -402,9 +401,10 @@ export default function LoansIndex({ loans }: LoansIndexProps) {
                         </div>
 
                         {filteredLoans.length === 0 && (
-                            <div className="text-center py-8 text-muted-foreground">
-                                <CreditCard className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                                <p>No loans found matching your criteria.</p>
+                            <div className="text-center py-12 text-muted-foreground">
+                                <CreditCard className="h-16 w-16 mx-auto mb-4 opacity-50" />
+                                <p className="text-lg">No loans found matching your criteria.</p>
+                                <p className="text-sm mt-2">Try adjusting your search or filter settings.</p>
                             </div>
                         )}
                     </CardContent>
