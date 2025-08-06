@@ -25,8 +25,15 @@ Route::get('/home', function () {
     return Inertia::render('Home');
 })->name('home');
 
-// Authenticated routes
-Route::middleware(['auth', 'verified'])->group(function () {
+// Approval routes (accessible to unapproved users)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/approval/pending', [App\Http\Controllers\ApprovalController::class, 'pending'])->name('approval.pending');
+    Route::get('/approval/rejected', [App\Http\Controllers\ApprovalController::class, 'rejected'])->name('approval.rejected');
+    Route::post('/approval/resubmit', [App\Http\Controllers\ApprovalController::class, 'resubmit'])->name('approval.resubmit');
+});
+
+// Authenticated and approved routes
+Route::middleware(['auth', 'verified', 'approved'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [WelfareController::class, 'dashboard'])->name('dashboard');
 

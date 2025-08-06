@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -31,6 +32,12 @@ class User extends Authenticatable
         'address',
         'id_number',
         'date_of_birth',
+        'email_verified',
+        'admin_approved',
+        'admin_approved_at',
+        'approved_by',
+        'approval_notes',
+        'approval_status',
     ];
 
     /**
@@ -58,6 +65,9 @@ class User extends Authenticatable
             'available_loan_limit' => 'decimal:2',
             'is_active' => 'boolean',
             'date_of_birth' => 'date',
+            'email_verified' => 'boolean',
+            'admin_approved' => 'boolean',
+            'admin_approved_at' => 'datetime',
         ];
     }
 
@@ -92,6 +102,11 @@ class User extends Authenticatable
         return $this->hasMany(CicInvestment::class, 'recorded_by');
     }
 
+    public function approvedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'approved_by');
+    }
+
     // Scopes
     public function scopeActive($query)
     {
@@ -108,6 +123,21 @@ class User extends Authenticatable
         return $query->where('role', 'admin');
     }
 
+    public function scopePendingApproval($query)
+    {
+        return $query->where('approval_status', 'pending');
+    }
+
+    public function scopeApproved($query)
+    {
+        return $query->where('approval_status', 'approved');
+    }
+
+    public function scopeRejected($query)
+    {
+        return $query->where('approval_status', 'rejected');
+    }
+
     // Helper methods
     public function isAdmin(): bool
     {
@@ -117,6 +147,21 @@ class User extends Authenticatable
     public function isTreasurer(): bool
     {
         return $this->role === 'treasurer';
+    }
+
+    public function isFullyApproved(): bool
+    {
+        return $this->email_verified && $this->admin_approved && $this->approval_status === 'approved';
+    }
+
+    public function isPendingApproval(): bool
+    {
+        return $this->approval_status === 'pending';
+    }
+
+    public function isRejected(): bool
+    {
+        return $this->approval_status === 'rejected';
     }
 
     public function calculateLoanLimit(): float

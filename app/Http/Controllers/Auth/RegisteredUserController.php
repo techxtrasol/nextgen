@@ -36,7 +36,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        // Check if this is the first user (make them admin)
+        // Check if this is the first user (make them admin and auto-approve)
         $isFirstUser = User::count() === 0;
 
         $user = User::create([
@@ -45,13 +45,22 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'role' => $isFirstUser ? 'admin' : 'member',
             'joined_at' => now(),
-            'is_active' => true,
+            'is_active' => $isFirstUser, // Only first user is active by default
+            'email_verified' => $isFirstUser, // Only first user is email verified by default
+            'admin_approved' => $isFirstUser, // Only first user is admin approved by default
+            'approval_status' => $isFirstUser ? 'approved' : 'pending',
         ]);
 
         event(new Registered($user));
 
-        Auth::login($user);
+        // Only auto-login the first user (admin)
+        if ($isFirstUser) {
+            Auth::login($user);
+            return redirect()->intended(route('dashboard', absolute: false));
+        }
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        // For other users, redirect to email verification notice
+        return redirect()->route('verification.notice')
+            ->with('status', 'Registration successful! Please check your email to verify your account, then wait for admin approval.');
     }
 }
